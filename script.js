@@ -1,6 +1,6 @@
 'use strict';
 
-alert('Hello world');
+//alert('Hello world');
 
 let user = {}; // фигурные скобки - это объект
 let posts = []; // квадратные скобки - это массив
@@ -88,3 +88,8 @@ console.log(Object.keys(user2));
 console.log(Object.values(user2));
 delete user2.name;
 console.log(user2);
+
+const user3 = {};
+user3.name = 'Att';
+user3.age = 3;
+console.log(user3);
