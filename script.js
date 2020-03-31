@@ -1,95 +1,60 @@
 'use strict';
 
-//alert('Hello world');
-
-let user = {}; // фигурные скобки - это объект
-let posts = []; // квадратные скобки - это массив
-const daysPerWeek = 7; // число
-let isAuthorised = false; // логическое значение
-let token; // тип undefined - то есть неопределенный.
-
-console.log(user);
-console.log(posts);
-console.log(daysPerWeek);
-console.log(isAuthorised);
-console.log(token);
-
-//daysPerWeek = 8;
-
-console.log(daysPerWeek);
-
-function sum(a, b) {
-	return a + b;
+class User {
+	constructor(id, name, email, isAuthorised) {
+		this.id = id,
+		this.name = name,
+		this.email = email,
+		this.isAuthorised = isAuthorised;
+	}
+};
+function authorize(user) {
+	user.isAuthorised = true;
 }
+const user = new User(1, "Vasya", "vas@vas.com", false);
+authorize(user);
 
-const resultC = sum(10, 5); // result будет равен 15
-
-console.log(resultC);
-
-let result = 0;
-for(let i = 0; i < 5; i++) {
-	result += i;
-	console.log(result);
-}
-// result равен 10 ( 0+1+2+3+4 = 10)
-
-let userRole = 'admin';
-if(userRole === 'admin'){
-	console.log('this is admin user');
-}
-else if (userRole === 'editor') {
-	console.log('this is editor user');
-}
-else {
-	console.log('this is other user');
-}
-
-let a1 = 1;
-let b1 = 1.0;
-let c1 = "1";
-
-console.log(a1==b1);
-console.log(a1==c1);
-console.log(b1==c1);
-
-console.log(a1===b1);
-console.log(a1===c1);
-console.log(b1===c1);
-
-let s1 = "5";
-console.log(s1 + 1);
-console.log(parseInt(s1) + 1);
-
-let name = "Attractor";
-console.log(name.slice(3));
-console.log(name.toUpperCase());
-
-let objects = ['Att', 5.3, true, 99];
-console.log(objects.length);
-console.log(objects.slice(2));
-console.log(objects);
-
-console.log(objects[0] + 10);
-console.log(objects[2] + 10);
-console.log(objects[3] + 10);
-
-
-const user2 = {};
-const post = {
-	title: 'Hello world',
-	isLiked: true
+/* when creating a post, we take id from an authorized
+ user and transfer it to the backend for adding to the database */
+class Post {
+	constructor(id, userId, image, descriprtion, date) {
+		this.id = id,
+		this.userId = userId,
+		this.image = image,
+		this.descriprtion = descriprtion,
+		this.date = date
+	}
 };
 
-user2.name = 'Attractor';
-console.log(user2);
-user2.age = 5;
-console.log(user2);
-console.log(Object.keys(user2));
-console.log(Object.values(user2));
-delete user2.name;
-console.log(user2);
+const post = new Post(1, user.id, "image.img", "long text", "22.01.2019");
 
-const user3 = {};
-user3.name = 'Att';
-user3.age = 3;
-console.log(user3);
+const user2 = new User(2, "gena@gena.com", false);
+authorize(user2);
+class Comment {
+	constructor(commentator, commentFor, comment, date) {
+		this.comentator = commentator,
+		this.commentFor = commentFor,
+		this.comment = comment,
+		this.date = date
+	}
+};
+
+const comment = new Comment(user2.id, post.id, "long text", "23.01.2019");
+
+console.log(user);
+console.log(post);
+console.log(user2);
+console.log(comment);
+
+let posts = [];
+function newPost(i) {
+	return new Post(i+2, user.id, "image" + i + ".img", "text" + i, "2" + i + ".01.2019");
+};
+
+for(let i = 0; 6 > i; i++) {
+	posts[i] = newPost(i);
+};
+function toPrint(post) {
+	console.log(post);
+}
+posts.forEach(toPrint);
