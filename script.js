@@ -28,9 +28,6 @@ function createPostElement(post) {
  	'</div>' +
   	'<div class="px-4 py-3">' +
 		'<div class="d-flex justify-content-around">' +
-		  '<span class="h1 mx-2 text-danger">' +
-			'<i class="fas fa-heart"></i>' +
-		  '</span>' +
 		  '<span class="h1 mx-2 muted">' +
 			'<i class="far fa-heart"></i>' +
 		  '</span>' +
@@ -40,9 +37,6 @@ function createPostElement(post) {
 		  '<span class="mx-auto"></span>' +
 		  '<span class="h1 mx-2 muted">' +
 			'<i class="far fa-bookmark"></i>' +
-		  '</span>' +
-		  '<span class="h1 mx-2 muted">' +
-			'<i class="fas fa-bookmark"></i>' +
 		  '</span>' +
 		'</div>' +
 	'<hr>' +
@@ -63,9 +57,8 @@ function addPost(commentElem) {
 	document.getElementById('posts-cont').append(commentElem);
 }
 
-hideSplashScreen();
-// showSplashScreen();
-
+const signUp = document.getElementsByClassName('btn-submit')[0];
+signUp.addEventListener('click', hideSplashScreen);
 
 class User {
 	constructor(id, name, email, isAuthorised) {
@@ -141,3 +134,47 @@ let isLiked = true;
 for(let i = 0; i < posts.length; i++) {
 	like(posts[i], postId, isLiked);
 };
+
+const hearts = document.getElementsByClassName('fa-heart');
+for(let i = 0; i < hearts.length; i++) {
+	hearts[i].addEventListener('click', function() {
+		if(hearts[i].classList.contains('fas')) {
+			hearts[i].classList.remove('fas');
+			hearts[i].classList.remove('text-danger');
+			hearts[i].classList.add('far');
+		} else {
+			hearts[i].classList.remove('far');
+			hearts[i].classList.add('text-danger');
+			hearts[i].classList.add('fas');
+		}
+	})
+};
+
+const postss = document.getElementsByClassName('card');
+for(let i = 0; i < postss.length; i++) {
+	let ims = postss[i].getElementsByClassName('w-100');
+	let he = postss[i].getElementsByClassName('fa-heart')[0];
+	for(let j = 0; j < ims.length; j++) {
+		ims[j].addEventListener('dblclick', function() {
+			he.classList.add('text-danger');
+			he.classList.add('fas');
+			he.classList.remove('far');
+		})
+	}
+};
+
+const bookmarks = document.getElementsByClassName('fa-bookmark');
+for(let i = 0; i < bookmarks.length; i++) {
+	bookmarks[i].addEventListener('click', function() {
+		if(bookmarks[i].classList.contains('fas')) {
+			bookmarks[i].classList.remove('fas');
+			bookmarks[i].classList.add('far');
+		} else {
+			bookmarks[i].classList.remove('far');
+			bookmarks[i].classList.add('fas');
+		}
+	})
+};
+
+
+
