@@ -1,24 +1,39 @@
 package km.hw60.insta.controller;
 
+import km.hw60.insta.DTO.PostDTO;
+import km.hw60.insta.model.Comment;
 import km.hw60.insta.model.User;
-import org.springframework.ui.Model;
+import km.hw60.insta.service.CommentService;
+import km.hw60.insta.service.PostService;
+import km.hw60.insta.service.UserService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class RController {
+    private final PostService postService;
+    private final UserService userService;
+    private final CommentService commentService;
 
-    @GetMapping("/demo/getUser")
-    public User getUser(Model m) {
-        User u = new User("tv", "email", "pass");
-        return u ;
+    public RController(PostService postService, UserService userService, CommentService commentService) {
+        this.postService = postService;
+        this.userService = userService;
+        this.commentService = commentService;
     }
 
-    @PostMapping("/addPost")
-    public String add(@RequestParam("image") String im, @RequestParam("description") String des) {
-        System.out.println(im);
-        System.out.println(des);
-        return "redirect:/index";
+    @GetMapping("/getUser")
+    public User getUser() {
+        return userService.getUser() ;
     }
+
+    @GetMapping("/posts")
+    public List<PostDTO> getPosts() {
+        return postService.getAllPosts();
+    }
+
+    @GetMapping("/comments")
+    public List<Comment> getComments() { return commentService.getAllComments(); }
 
 
 }
