@@ -7,6 +7,7 @@ import km.hw60.insta.service.PostService;
 import km.hw60.insta.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,6 +50,11 @@ public class MainController {
         postService.savePost(post);
         return "success";
     }
+
+//    @GetMapping("/images/{img}")
+//    public String getImage(@PathVariable("img") String img) {
+//        return "src/main/resources/static/images/" + img;
+//    }
 
     @PostMapping("/addComment")
     public String addComment(@RequestParam("userId") String userId,
