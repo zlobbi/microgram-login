@@ -37,13 +37,14 @@ public class MainController {
     public String get(@RequestParam("image") MultipartFile img,
                       @RequestParam("description") String des,
                       @RequestParam("userId")  String userId) throws IOException {
-            File imgFile = new File("src/main/resources/static/images/" + img.getOriginalFilename());
+        File imgFile = new File("src/main/resources/static/images/" + img.getOriginalFilename());
+        File imgTarget = new File("target/classes/static/images/" + img.getOriginalFilename());
         FileOutputStream o = new FileOutputStream(imgFile);
+        FileOutputStream o2 = new FileOutputStream(imgTarget);
         o.write(img.getBytes());
+        o2.write(img.getBytes());
+        o2.close();
         o.close();
-        System.out.println(userId);
-        System.out.println(des);
-        System.out.println(img.getOriginalFilename());
         Post post = new Post(userService.getUser(), img.getOriginalFilename(), des);
         postService.savePost(post);
         return "success";

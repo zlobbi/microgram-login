@@ -172,12 +172,12 @@ window.addEventListener('load', function () {
         let pId = commentElem.getElementsByTagName('input')[0].value;
         let postsCont = document.getElementById("posts-cont");
         let p = postsCont.getElementsByClassName(pId)[0];
-        // if(p != null) {
+        if(p != null) {
             p.getElementsByClassName("com")[0].append(commentElem);
-        // } else {
-        //     p = document.getElementById(pId);
-        //     p.getElementsByClassName("com")[0].append(commentElem);
-        // }
+        } else {
+            p = document.getElementById(pId);
+            p.getElementsByClassName("com")[0].append(commentElem);
+        }
     }
 
     function addPost(postElem) {
@@ -264,7 +264,11 @@ window.addEventListener('load', function () {
             }
         });
         com.addEventListener('click', function () {
-            document.getElementById('comFor-' + id).hidden = false;
+            if(document.getElementById('comFor-' + id).hidden === false) {
+                document.getElementById('comFor-' + id).hidden = true;
+            } else {
+                document.getElementById('comFor-' + id).hidden = false;
+            }
         })
 
     };
