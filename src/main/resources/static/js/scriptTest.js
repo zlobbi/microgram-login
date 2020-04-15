@@ -166,7 +166,7 @@ window.addEventListener('load', function () {
             let c = new Comment(data.get("userId"), data.get("postId"), data.get("comment"), data.get("userEmail"));
             addComment(createCommentElement(c));
             document.getElementById('comFor-' + c.commentFor).hidden = true;
-            window.location.href = 'http://localhost:8080/';
+            window.location.href = 'http://localhost:8080';
         });
     }
 
