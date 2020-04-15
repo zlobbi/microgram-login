@@ -37,7 +37,7 @@ public class MainController {
     public String get(@RequestParam("image") MultipartFile img,
                       @RequestParam("description") String des,
                       @RequestParam("userId")  String userId) throws IOException {
-        File imgFile = new File("src/main/resources/static/images/" + img.getOriginalFilename());
+            File imgFile = new File("src/main/resources/static/images/" + img.getOriginalFilename());
         FileOutputStream o = new FileOutputStream(imgFile);
         o.write(img.getBytes());
         o.close();

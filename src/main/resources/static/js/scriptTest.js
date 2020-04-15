@@ -13,6 +13,7 @@ window.addEventListener('load', function () {
     };
     const signUp = document.getElementsByClassName('btn-submit')[0];
     signUp.addEventListener('click', hideSplashScreen);
+});
 
     const addP = document.getElementsByClassName('upload')[0];
     addP.addEventListener('click', function () {
@@ -34,6 +35,7 @@ window.addEventListener('load', function () {
         let elem = document.createElement('div');
         elem.classList.add('card');
         elem.classList.add('my-3');
+        elem.classList.add(post.id);
         elem.id = post.id;
         elem.innerHTML =
             '<div>' +
@@ -53,6 +55,7 @@ window.addEventListener('load', function () {
             '</span>' +
             '</div>' +
             '<hr>' +
+            
             '<div class="com-upload-form" id="comFor-' + post.id + '" + hidden>' +
             '<form id="com-form" class="com-form">' +
             '<input type="hidden" name="postId" value="' + post.id + '">' +
@@ -159,7 +162,7 @@ window.addEventListener('load', function () {
                 body: data
             }).then(r => r.json()).then(data => console.log(data));
             let c = new Comment(data.get("userId"), data.get("postId"), data.get("comment"), data.get("userEmail"));
-            addComment(createCommentElement(c));
+            // addComment(createCommentElement(c));
             document.getElementById('comFor-' + c.commentFor).hidden = true;
             window.location.href = 'http://localhost:8080/';
         });
@@ -167,9 +170,14 @@ window.addEventListener('load', function () {
 
     function addComment(commentElem) {
         let pId = commentElem.getElementsByTagName('input')[0].value;
-        let p = document.getElementById(pId);
-        if(p != null)
-        p.getElementsByClassName("com")[0].append(commentElem);
+        let postsCont = document.getElementById("posts-cont");
+        let p = postsCont.getElementsByClassName(pId)[0];
+        // if(p != null) {
+            p.getElementsByClassName("com")[0].append(commentElem);
+        // } else {
+        //     p = document.getElementById(pId);
+        //     p.getElementsByClassName("com")[0].append(commentElem);
+        // }
     }
 
     function addPost(postElem) {
@@ -269,7 +277,7 @@ window.addEventListener('load', function () {
     };
 
     addEventListeners(document.getElementById('1s'));
-});
+
 
 
 
