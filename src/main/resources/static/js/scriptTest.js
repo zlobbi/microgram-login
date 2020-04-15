@@ -1,10 +1,12 @@
 'use strict';
 
 window.addEventListener('load', function () {
+
     function hideSplashScreen() {
         document.getElementById('page-splash').hidden = true;
         document.body.classList.remove('no-scroll');
     };
+
 
     function showSplashScreen() {
         document.getElementById('page-splash').hidden = false;
@@ -13,6 +15,8 @@ window.addEventListener('load', function () {
     };
     const signUp = document.getElementsByClassName('btn-submit')[0];
     signUp.addEventListener('click', hideSplashScreen);
+
+});
 
     const addP = document.getElementsByClassName('upload')[0];
     addP.addEventListener('click', function () {
@@ -95,9 +99,10 @@ window.addEventListener('load', function () {
             addPost(createPostElement(p));
         }
     }
+
     function addCommentsFromDB(data) {
         let i = data.length;
-        for(let j = 0; j < i; j++) {
+        for (let j = 0; j < i; j++) {
             let c = new Comment(data[j].commentator, data[j].commentFor, data[j].comment, data[j].userEmail);
             addComment(createCommentElement(c));
         }
@@ -168,8 +173,8 @@ window.addEventListener('load', function () {
     function addComment(commentElem) {
         let pId = commentElem.getElementsByTagName('input')[0].value;
         let p = document.getElementById(pId);
-        if(p != null)
-        p.getElementsByClassName("com")[0].append(commentElem);
+        if (p != null)
+            p.getElementsByClassName("com")[0].append(commentElem);
     }
 
     function addPost(postElem) {
@@ -256,7 +261,10 @@ window.addEventListener('load', function () {
             }
         });
         com.addEventListener('click', function () {
+            // if(document.getElementById('comFor-' + id).hidden === true) {
             document.getElementById('comFor-' + id).hidden = false;
+            // }
+            // else { document.getElementById('comFor-' + id).hidden = true;}
         })
 
     };
@@ -269,7 +277,9 @@ window.addEventListener('load', function () {
     };
 
     addEventListeners(document.getElementById('1s'));
-});
+
+
+
 
 
 

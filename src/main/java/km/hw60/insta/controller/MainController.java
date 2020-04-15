@@ -7,6 +7,7 @@ import km.hw60.insta.service.PostService;
 import km.hw60.insta.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,16 +39,22 @@ public class MainController {
                       @RequestParam("description") String des,
                       @RequestParam("userId")  String userId) throws IOException {
         File imgFile = new File("src/main/resources/static/images/" + img.getOriginalFilename());
+        File imgTarget = new File("target/classes/static/images/" + img.getOriginalFilename());
         FileOutputStream o = new FileOutputStream(imgFile);
+        FileOutputStream o2 = new FileOutputStream(imgTarget);
         o.write(img.getBytes());
+        o2.write(img.getBytes());
+        o2.close();
         o.close();
-        System.out.println(userId);
-        System.out.println(des);
-        System.out.println(img.getOriginalFilename());
         Post post = new Post(userService.getUser(), img.getOriginalFilename(), des);
         postService.savePost(post);
         return "success";
     }
+
+//    @GetMapping("/images/{img}")
+//    public String getImage(@PathVariable("img") String img) {
+//        return "src/main/resources/static/images/" + img;
+//    }
 
     @PostMapping("/addComment")
     public String addComment(@RequestParam("userId") String userId,
