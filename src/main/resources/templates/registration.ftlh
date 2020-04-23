@@ -20,7 +20,7 @@
                 <input type="password"  name="password" class="form-control mb-1" placeholder="Password"><br>
                 <button class="btn btn-outline-primary btn-block">Register</button><br>
             </form>
-            <a class="btn btn-outline-primary btn-block" href="/index">To login</a>
+            <a class="btn btn-outline-primary btn-block" href="/">To login</a>
         </div>
     </div>
 </section>

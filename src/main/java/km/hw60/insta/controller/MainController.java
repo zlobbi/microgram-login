@@ -31,17 +31,8 @@ public class MainController {
 
 
 
-//    @GetMapping
-//    public String reg() { return  "registration"; }
-//
-//    @GetMapping("/index")
-//    public String ind() { return "index.html"; }
-
-    @GetMapping("/demo")
-    public String demo() {
-        return "demo";
-    }
-
+    @GetMapping("/registration")
+    public String reg() { return "registration"; }
 
     @PostMapping("/addPost")
     public String get(@RequestParam("image") MultipartFile img,
