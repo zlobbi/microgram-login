@@ -10,6 +10,7 @@
 </head>
 <body class="no-scroll">
 <div class="container">
+    <div class="row"><button class="btn btn-primary" id="sign-out">sign out</button> </div>
     <div class="row justify-content-center">
         <div class="col col-lg-7 posts-container" id="posts-cont">
             <!-- single post start -->
@@ -63,7 +64,7 @@
         </div>
     </div>
     <div class="img-upload-form" id="img-upload">
-        <form id="login-form" enctype=multipart/form-data">
+        <form id="upl-form" enctype=multipart/form-data">
             <input type="file" placeholder="Image" name="image">
             <br>
             <textarea placeholder="Description" name="description"> </textarea>
@@ -76,15 +77,21 @@
 </div>
 <!-- Splash screen -->
 <section id="page-splash" class="page-splash">
-    <div class="card" id="registration-form">
-        <div class="card-body">
-            <h3 class="h3">Зарегистрируйтесь</h3>
+    <div id="log" class="d-flex justify-content-center" hidden>
+        <div class="mx-3">
+            <h3>Вход</h3>
+            <form id="login-form">
+                <input type="text" name="username" class="form-control mb-1" placeholder="Логин"><br>
+                <input type="password" name="password" class="form-control mb-1" placeholder="Пароль"><br>
+                <button type="submit" class="btn btn-outline-primary btn-block">Login</button><br>
+                <a href="/registration" class="btn btn-outline-primary btn-block">Register</a>
+            </form>
         </div>
-        <button class="btn btn-submit mx-auto border border-secondary border-rounded bg-light">Sign up</button>
     </div>
 </section>
 </body>
 </html>
 
 <script src="js/scriptTest.js"></script>
+<!--<script src="js/login.js"></script>-->
 

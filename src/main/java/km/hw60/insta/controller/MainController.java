@@ -2,6 +2,7 @@ package km.hw60.insta.controller;
 
 import km.hw60.insta.model.Comment;
 import km.hw60.insta.model.Post;
+import km.hw60.insta.model.User;
 import km.hw60.insta.service.CommentService;
 import km.hw60.insta.service.PostService;
 import km.hw60.insta.service.UserService;
@@ -27,6 +28,14 @@ public class MainController {
         this.postService = postService;
         this.commentService = commentService;
     }
+
+
+
+//    @GetMapping
+//    public String reg() { return  "registration"; }
+//
+//    @GetMapping("/index")
+//    public String ind() { return "index.html"; }
 
     @GetMapping("/demo")
     public String demo() {

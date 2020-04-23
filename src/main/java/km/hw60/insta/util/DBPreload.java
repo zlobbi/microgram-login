@@ -24,7 +24,7 @@
 //    @Bean
 //    CommandLineRunner generateGibberish(UserRepository usersRepo, PostRepository postRepo, CommentRepository commentRepository) {
 //        return args -> {
-////            usersRepo.deleteAll();
+//            usersRepo.deleteAll();
 //            commentRepository.deleteAll();
 //            postRepo.deleteAll();
 //

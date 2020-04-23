@@ -1,19 +1,21 @@
 'use strict';
-
 window.addEventListener('load', function () {
-    function hideSplashScreen() {
-        document.getElementById('page-splash').hidden = true;
-        document.body.classList.remove('no-scroll');
-    };
-
-    function showSplashScreen() {
-        document.getElementById('page-splash').hidden = false;
-        document.body.classList.add('no-scroll');
-
-    };
-    const signUp = document.getElementsByClassName('btn-submit')[0];
-    signUp.addEventListener('click', hideSplashScreen);
+        if (restoreUser() === null) {
+            showSplashScreen();
+        } else {
+            hideSplashScreen();
+        }
 });
+function hideSplashScreen() {
+    document.getElementById('page-splash').hidden = true;
+    document.body.classList.remove('no-scroll');
+};
+
+function showSplashScreen() {
+    document.getElementById('page-splash').hidden = false;
+    document.body.classList.add('no-scroll');
+
+};
 
     const addP = document.getElementsByClassName('upload')[0];
     addP.addEventListener('click', function () {
@@ -57,11 +59,11 @@ window.addEventListener('load', function () {
             '<hr>' +
             
             '<div class="com-upload-form" id="comFor-' + post.id + '" + hidden>' +
-            '<form id="com-form" class="com-form">' +
+            '<form class="com-form">' +
             '<input type="hidden" name="postId" value="' + post.id + '">' +
             '<textarea placeholder="Comment" name="comment"> </textarea>' +
             '<br>' +
-            '<button type="button" id="comment">comment</button>' +
+            '<button type="button" >comment</button>' +
             '</form>' +
             '</div>' +
             '<div>' +
@@ -79,8 +81,8 @@ window.addEventListener('load', function () {
         return await fetch('http://localhost:8080/getUser');
     }
 
-    async function getPosts() {
-        return await fetch('http://localhost:8080/posts');
+    function getPosts() {
+        return fetch('http://localhost:8080/posts');
     }
 
     async function getComments() {
@@ -138,14 +140,14 @@ window.addEventListener('load', function () {
 
     let upload = document.getElementById('upload');
     upload.addEventListener('click', async function () {
-        const form = document.getElementById('login-form');
+        const form = document.getElementById('upl-form');
         let data = new FormData(form);
         data.append("userId", await getUserId());
         await fetch('http://localhost:8080/addPost', {
             method: 'POST',
             body: data
         }).then(r => r.json()).then(data => console.log(data));
-        window.location.href = 'http://localhost:8080/';
+        window.location.href = BASE_URL;
     });
 
     let comment = document.getElementById('com-form');
@@ -164,7 +166,7 @@ window.addEventListener('load', function () {
             let c = new Comment(data.get("userId"), data.get("postId"), data.get("comment"), data.get("userEmail"));
             // addComment(createCommentElement(c));
             document.getElementById('comFor-' + c.commentFor).hidden = true;
-            window.location.href = 'http://localhost:8080/';
+            window.location.href = BASE_URL;
         });
     }
 
@@ -172,12 +174,7 @@ window.addEventListener('load', function () {
         let pId = commentElem.getElementsByTagName('input')[0].value;
         let postsCont = document.getElementById("posts-cont");
         let p = postsCont.getElementsByClassName(pId)[0];
-        if(p != null) {
-            p.getElementsByClassName("com")[0].append(commentElem);
-        } else {
-            p = document.getElementById(pId);
-            p.getElementsByClassName("com")[0].append(commentElem);
-        }
+        p.getElementsByClassName("com")[0].append(commentElem);
     }
 
     function addPost(postElem) {
@@ -281,6 +278,63 @@ window.addEventListener('load', function () {
     };
 
     addEventListeners(document.getElementById('1s'));
+
+    document.getElementById('sign-out').addEventListener('click', function () {
+        localStorage.clear();
+        window.location.href = BASE_URL;
+    })
+
+
+const BASE_URL = "http://localhost:8080";
+
+function saveUser(user) {
+    const userAsJSON = JSON.stringify(user)
+    localStorage.setItem('user', userAsJSON);
+}
+function restoreUser() {
+    const userAsJSON = localStorage.getItem('user');
+    return JSON.parse(userAsJSON);
+}
+
+const loginForm = document.getElementById('login-form');
+loginForm.addEventListener('submit', onLoginHandler);
+async function onLoginHandler(e) {
+    e.preventDefault();
+    const form = e.target;
+    const userFormData = new FormData(form);
+    const user = Object.fromEntries(userFormData);
+    saveUser(user);
+    updateRootPage();
+}
+function updateRootPage() {
+    console.log("LS USER: " + localStorage.getItem('user'));
+    if (localStorage.getItem('user') == null){
+    } else {
+        fetchAuthorised(BASE_URL +'/posts').then(res => {
+            if (res.ok) {
+                hideSplashScreen();
+            } else {
+                showSplashScreen();
+            }
+        });
+    }
+}
+
+function updateOptions(options) {
+    const update = { ...options };
+    update.mode = 'cors';
+    update.headers = { ... options.headers };
+    update.headers['Content-Type'] = 'application/json';
+    const user = restoreUser();
+    if(user) {
+        update.headers['Authorization'] = 'Basic ' + btoa(user.username + ':' + user.password);
+    }
+    return update;
+}
+function fetchAuthorised(url, options) {
+    const settings = options || {};
+    return  fetch(url, updateOptions(settings));
+}
 
 
 
